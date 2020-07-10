@@ -13,7 +13,10 @@ def fobos_lasso(A, b, w0, eta, mu, max_iters):
         wi_12 = w.T[i]-eta*gf
         wi_1 = np.zeros(len(wi_12))
         for j in range(len(wi_12)):
-            wi_1j = np.sign(wi_12[j])*(np.abs(wi_12[j])-mu)
+            if np.abs(wi_12[j])-mu > 0:
+                wi_1j = np.sign(wi_12[j])*(np.abs(wi_12[j])-mu)
+            else:
+                wi_1j = 0
             wi_1[j] = (wi_1j)
         w.T[i+1] = wi_1
         t = A_n.dot(w.T[i+1]).T-b.T
